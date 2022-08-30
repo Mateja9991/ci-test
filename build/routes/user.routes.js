@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
+const express_1 = require("express");
+const user_services_1 = require("../services/user.services");
+const middleware_1 = require("../middleware");
+exports.userRouter = (0, express_1.Router)();
+exports.userRouter.post('/', user_services_1.addUser);
+exports.userRouter.post('/login', user_services_1.loginUser);
+exports.userRouter.get('/', middleware_1.jwtAuth, user_services_1.getAllUsers);
+exports.userRouter.get('/:id', middleware_1.jwtAuth, user_services_1.getUser);
+exports.userRouter.patch('/:id', middleware_1.jwtAuth, (0, middleware_1.validateUpdateFields)(['name', 'email', 'password', 'age']), user_services_1.updateUser);
+exports.userRouter.delete('/:id', middleware_1.jwtAuth, user_services_1.deleteUser);
